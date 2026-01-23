@@ -34,7 +34,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         String authHeader = request.getHeader("Authorization");
 
-        // 🔥 IMPORTANT: DO NOT BLOCK REQUESTS HERE
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
@@ -46,7 +45,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         try {
             username = jwtUtils.extractUsername(token);
         } catch (Exception e) {
-            // 🔥 INVALID TOKEN → LET SPRING HANDLE IT
             filterChain.doFilter(request, response);
             return;
         }

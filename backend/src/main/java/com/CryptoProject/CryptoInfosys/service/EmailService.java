@@ -29,11 +29,16 @@ public class EmailService {
         mailSender.send(message);
     }
 
-    public void sendPasswordResetEmail(String to, String resetUrl) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(to);
-        message.setSubject("Password Reset Request");
-        message.setText("Click here to reset your password: " + resetUrl);
-        mailSender.send(message);
-    }
+    public void sendPasswordResetEmail(String to, String token) {
+
+    String resetUrl = "http://localhost:3000/reset-password?token="+token;
+
+    SimpleMailMessage message = new SimpleMailMessage();
+    message.setTo(to);
+    message.setSubject("Password Reset Request");
+    message.setText("Click here to reset your password: \n\n" + resetUrl);
+
+    mailSender.send(message);
+}
+
 }

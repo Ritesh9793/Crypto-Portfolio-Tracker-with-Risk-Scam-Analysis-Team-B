@@ -24,7 +24,6 @@ public class JwtUtils {
         return Keys.hmacShaKeyFor(jwtSecret.getBytes());
     }
 
-    // 🔥 ADD THIS METHOD (THIS FIXES YOUR ERROR)
     public String generateToken(String username) {
         return Jwts.builder()
                 .setSubject(username)

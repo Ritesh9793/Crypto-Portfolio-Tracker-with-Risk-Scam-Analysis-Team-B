@@ -86,7 +86,10 @@ public class PnLService {
                 dto.realizedPnL +=
                         (price - dto.avgBuyPrice) * qty;
 
-                dto.quantity -= qty;
+                if (qty > dto.quantity) {
+                    throw new IllegalStateException("Selling more than owned for " + asset);
+                }
+
             }
         }
 

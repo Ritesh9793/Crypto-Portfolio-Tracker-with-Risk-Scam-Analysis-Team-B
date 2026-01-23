@@ -1,9 +1,14 @@
 package com.CryptoProject.CryptoInfosys.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class AddExchangeAccountRequest {
 
+    @NotBlank
     private String exchange;
+    @NotBlank
     private String apiKey;
+    @NotBlank
     private String apiSecret;
 
     public String getExchange() {

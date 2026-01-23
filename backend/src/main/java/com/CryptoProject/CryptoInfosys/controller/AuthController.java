@@ -3,11 +3,15 @@ package com.CryptoProject.CryptoInfosys.controller;
 
 import com.CryptoProject.CryptoInfosys.dto.AuthRequest;
 import com.CryptoProject.CryptoInfosys.dto.AuthResponse;
+import com.CryptoProject.CryptoInfosys.dto.ResetPasswordRequest;
+import com.CryptoProject.CryptoInfosys.dto.ForgotPasswordRequest;
 import com.CryptoProject.CryptoInfosys.dto.RegisterRequest;
 import com.CryptoProject.CryptoInfosys.service.AuthService;
 import com.CryptoProject.CryptoInfosys.service.MailService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -47,9 +51,23 @@ public ResponseEntity<?> register(@RequestBody RegisterRequest req) {
     }
 
     @PostMapping("/forgot-password")
-    public ResponseEntity<?> forgotPassword(@RequestParam String email) {
-        // ...existing logic to generate reset token...
-        mailService.sendEmail(email, "Password Reset", "Reset link: ...");
-        return ResponseEntity.ok().build();
+public ResponseEntity<?> forgotPassword(
+        @RequestBody ForgotPasswordRequest request) {
+
+    authService.forgotPassword(request.getEmail());
+
+    return ResponseEntity.ok(
+            Map.of("message", "Reset link sent successfully"));
+}
+
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(
+            @RequestBody ResetPasswordRequest request) {
+
+        authService.resetPassword(request);
+
+        return ResponseEntity.ok(
+                Map.of("message", "Password reset successfully"));
     }
 }
